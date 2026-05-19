@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    .note { fill: #000; }
+    @media (prefers-color-scheme: dark) { .note { fill: #fff; } }
+  </style>
+  <g class="note">
+    <rect x="58" y="14" width="4.2" height="60"/>
+    <path d="M62 14 C 84 26, 86 44, 76 58 C 86 44, 82 28, 62 22 Z"/>
+    <ellipse cx="47" cy="78" rx="13" ry="8.5" transform="rotate(-22 47 78)"/>
+  </g>
+</svg>
