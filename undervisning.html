@@ -419,6 +419,61 @@
     color: var(--ink-soft);
   }
 
+  /* ─── MEET THE TEACHER ─── */
+  .teacher-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .teacher-photo {
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    border: 1px solid var(--glass-bd);
+    box-shadow: inset 0 1px 0 var(--glass-hl), 0 30px 70px -25px rgba(0,0,0,0.6);
+    aspect-ratio: 4 / 5;
+    position: relative;
+  }
+  .teacher-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 30% 30%;
+    display: block;
+  }
+  .teacher-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(7,6,12,0.45) 0%, transparent 30%);
+    pointer-events: none;
+  }
+  .teacher-text .sec-title { margin-bottom: 18px; }
+  .teacher-text p {
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 54ch;
+  }
+  .teacher-text p + p { margin-top: 16px; }
+  .teacher-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+  .teacher-chips span {
+    display: inline-block;
+    padding: 5px 13px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.78);
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .teacher-text .btn-row { margin-top: 28px; }
+
   /* ─── TABS ─── */
   .tabs-list {
     display: flex;
@@ -606,6 +661,8 @@
   @media (max-width: 900px) {
     .price-grid { grid-template-columns: 1fr; }
     .info-grid { grid-template-columns: 1fr; gap: 14px; }
+    .teacher-grid { grid-template-columns: 1fr; gap: 28px; }
+    .teacher-photo { aspect-ratio: 1 / 1; max-width: 480px; }
   }
 
   @media (max-width: 768px) {
@@ -679,6 +736,7 @@
   </a>
   <ul>
     <li><a href="#priser">Priser</a></li>
+    <li><a href="#laereren">Læreren</a></li>
     <li><a href="#tabs">Tabs</a></li>
   </ul>
   <a class="cta" href="mailto:Alexander_elung@hotmail.com?subject=Undervisning">Book en time</a>
@@ -787,6 +845,43 @@
   </div>
 </section>
 
+<!-- ─── MEET THE TEACHER ─── -->
+<section id="laereren">
+  <div class="teacher-grid">
+    <div class="teacher-photo">
+      <img src="images/portrait-casual.jpg" alt="Alexander Wrede Elung" loading="lazy" />
+    </div>
+    <div class="teacher-text">
+      <div class="sec-eyebrow">Mød læreren</div>
+      <h2 class="sec-title">Alexander <span class="dim">Wrede Elung</span></h2>
+      <p>
+        Jeg er komponist og musikproducer fra København. Til daglig skriver jeg
+        musik til teaterforestillinger &mdash; bl.a. for Folketeatret, Odense Teater
+        og Teater Zeppelin &mdash; og deler covers og egne numre på TikTok, YouTube
+        og Instagram.
+      </p>
+      <p>
+        Som lærer tager jeg udgangspunkt i dig: din smag, dit niveau og det, du
+        drømmer om at kunne spille. Undervisningen er afslappet og konkret &mdash;
+        vi arbejder med de numre, du gerne vil lære, og du får tabs, noder og en
+        øveplan med hjem, så du altid ved, hvad du skal øve på.
+      </p>
+      <p>
+        Uanset om du er helt ny eller har spillet i årevis, finder vi et niveau,
+        der passer til dig.
+      </p>
+      <div class="teacher-chips">
+        <span>Komponist &amp; producer</span>
+        <span>Alle niveauer</span>
+        <span>Online eller på Frederiksberg</span>
+      </div>
+      <div class="btn-row">
+        <a href="mailto:Alexander_elung@hotmail.com?subject=Undervisning" class="btn btn-primary">Book en time</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ─── TABS ─── -->
 <section id="tabs">
   <div class="sec-eyebrow">Tabs</div>
@@ -841,9 +936,9 @@
   // Tilføj en tab pr. linje herunder — så dukker den automatisk op på siden.
   // title: sangens navn · sub: valgfri undertekst (fx "Fingerstyle · PDF")
   // url: link til tab'en (Gumroad, PDF, Google Drive osv.)
-  // label: valgfri knaptekst (standard: "Åbn tab")
+  // label: valgfri knaptekst (standard: "Download")
   const TABS = [
-    { title: 'Bamse & Kylling', sub: 'Guitar-tabs · Gumroad', url: 'https://elungster.gumroad.com/l/drxaa', label: 'Køb tab' },
+    { title: 'Bamse & Kylling', sub: 'Guitar-tabs', url: 'https://elungster.gumroad.com/l/drxaa' },
   ];
 
   (function renderTabs() {
@@ -870,11 +965,11 @@
           </div>
         </div>
         <div class="t-right">
-          <span>Åbn tab</span>
+          <span>Download</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l10-10M8 7h9v9"/></svg>
         </div>`;
       a.querySelector('.t-name').textContent = tab.title;
-      a.querySelector('.t-right span').textContent = tab.label || 'Åbn tab';
+      a.querySelector('.t-right span').textContent = tab.label || 'Download';
       const subEl = a.querySelector('.t-sub');
       if (tab.sub) subEl.textContent = tab.sub;
       else subEl.remove();
