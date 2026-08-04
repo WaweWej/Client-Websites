@@ -840,9 +840,10 @@
   // ─── TABS ───
   // Tilføj en tab pr. linje herunder — så dukker den automatisk op på siden.
   // title: sangens navn · sub: valgfri undertekst (fx "Fingerstyle · PDF")
-  // url: link til tab'en (PDF, Google Drive, Songsterr osv.)
+  // url: link til tab'en (Gumroad, PDF, Google Drive osv.)
+  // label: valgfri knaptekst (standard: "Åbn tab")
   const TABS = [
-    // { title: 'Sangtitel', sub: 'PDF', url: 'https://…' },
+    { title: 'Bamse & Kylling', sub: 'Guitar-tabs · Gumroad', url: 'https://elungster.gumroad.com/l/drxaa', label: 'Køb tab' },
   ];
 
   (function renderTabs() {
@@ -873,6 +874,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l10-10M8 7h9v9"/></svg>
         </div>`;
       a.querySelector('.t-name').textContent = tab.title;
+      a.querySelector('.t-right span').textContent = tab.label || 'Åbn tab';
       const subEl = a.querySelector('.t-sub');
       if (tab.sub) subEl.textContent = tab.sub;
       else subEl.remove();
