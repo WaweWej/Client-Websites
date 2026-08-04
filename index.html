@@ -199,6 +199,41 @@
   }
   .nav .cta:hover { transform: scale(1.04); box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
+  /* ─── LANGUAGE TOGGLE ─── */
+  .lang-toggle {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 100;
+    display: inline-flex;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(15,13,26,0.55);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-bd);
+    box-shadow: inset 0 1px 0 var(--glass-hl), 0 10px 40px -10px rgba(0,0,0,0.5);
+  }
+  .lang-toggle button {
+    padding: 6px 11px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-toggle button:not(.active):hover { background: rgba(255,255,255,0.08); color: var(--ink); }
+  .lang-toggle button.active { background: var(--ink); color: var(--bg-deep); }
+  @media (max-width: 768px) {
+    .lang-toggle { top: 14px; right: 14px; }
+    .lang-toggle button { padding: 5px 9px; font-size: 12px; }
+  }
+
   /* ─── HERO ─── */
   .hero {
     position: relative;
@@ -1186,6 +1221,12 @@
 <!-- ─── CURSOR-FOLLOWING GLOW ─── -->
 <div class="cursor-glow" aria-hidden="true"></div>
 
+<!-- ─── LANGUAGE TOGGLE ─── -->
+<div class="lang-toggle" role="group" aria-label="Language / Sprog">
+  <button type="button" data-lang="en" class="active">EN</button>
+  <button type="button" data-lang="da">DA</button>
+</div>
+
 <!-- ─── HERO ─── -->
 <header class="hero">
 
@@ -1203,10 +1244,10 @@
       </p>
       <div class="hero-actions">
         <a href="#work" class="btn btn-primary">
-          Hear the work
+          <span>Hear the work</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a href="undervisning.html" class="btn btn-ghost">Undervisning &amp; tabs</a>
+        <a href="undervisning.html" class="btn btn-ghost">Lessons &amp; tabs</a>
         <a href="mailto:Alexander_elung@hotmail.com" class="btn btn-ghost">Get in touch</a>
       </div>
     </div>
@@ -1375,7 +1416,7 @@
   <div class="contact">
     <h1 class="contact-h1">
       <a href="mailto:Alexander_elung@hotmail.com">
-        Contact <span class="arrow" aria-hidden="true">→</span>
+        <span class="c-label">Contact</span> <span class="arrow" aria-hidden="true">→</span>
       </a>
     </h1>
     <div class="cta-socials">
@@ -1422,7 +1463,7 @@
     <div class="foot-col">
       <div class="foot-h">Pages</div>
       <ul style="margin-bottom: 26px;">
-        <li><a href="undervisning.html">Undervisning &amp; tabs</a></li>
+        <li><a href="undervisning.html">Lessons &amp; tabs</a></li>
       </ul>
       <div class="foot-h">Elsewhere</div>
       <ul>
@@ -1836,6 +1877,74 @@
         }
       });
     }
+  });
+
+  // ─── LANGUAGE TOGGLE ───
+  // Default: English on the front page. The visitor's explicit choice is
+  // stored and carried across pages (undervisning.html defaults to Danish).
+  const LANG_KEY = 'awej.lang';
+  const LANG_TITLES = {
+    en: 'Alexander Wrede Elung-Jensen — Composer & Sound Designer',
+    da: 'Alexander Wrede Elung-Jensen — Komponist & Sounddesigner',
+  };
+  const LANG_STRINGS = [
+    { sel: '.hero-sub',
+      en: 'Composer and music producer based in Copenhagen.',
+      da: 'Komponist og musikproducer fra København.' },
+    { sel: '.hero-actions .btn-primary span', en: 'Hear the work', da: 'Hør musikken' },
+    { sel: '.hero-actions a[href="undervisning.html"]', en: 'Lessons & tabs', da: 'Undervisning & tabs' },
+    { sel: '.hero-actions a[href^="mailto"]', en: 'Get in touch', da: 'Kontakt mig' },
+    { sel: '.approach p:nth-of-type(1)', mode: 'html',
+      en: 'My goal is to create music that adds <em>emotion, character, and atmosphere</em> while serving the project’s vision. Collaboration is central to my process.',
+      da: 'Mit mål er at skabe musik, der tilfører <em>følelse, karakter og atmosfære</em>, og som samtidig understøtter projektets vision. Samarbejde er centralt i min proces.' },
+    { sel: '.approach p:nth-of-type(2)', mode: 'html',
+      en: 'No two works demand the same approach. Genre, mood, and instrumentation are shaped in response to the project’s needs, whether through modern electronic production and VST instruments, historically and culturally accurate instrumentation, or entirely original sonic textures.',
+      da: 'Ingen to værker kræver samme tilgang. Genre, stemning og instrumentering formes efter projektets behov — hvad enten det er gennem moderne elektronisk produktion og VST-instrumenter, historisk og kulturelt præcis instrumentering eller helt originale lyduniverser.' },
+    { sel: '#work .sec-title', mode: 'html',
+      en: 'Featured <span class="it grad">work</span>',
+      da: 'Udvalgte <span class="it grad">værker</span>' },
+    { sel: '[data-prod="human-gaze"] .venue .tag', en: 'Stage', da: 'Scene' },
+    { sel: '.contact-h1 .c-label', en: 'Contact', da: 'Kontakt' },
+    { sel: '.foot-tag', en: 'Composer & Sound Designer', da: 'Komponist & sounddesigner' },
+    { sel: '.foot-bio',
+      en: 'Original music and sound design for theatre, film, and television. Based in Copenhagen.',
+      da: 'Original musik og sounddesign til teater, film og tv. Baseret i København.' },
+    { sel: '.foot-col:not(.foot-brand) div.foot-h:nth-of-type(1)', en: 'Pages', da: 'Sider' },
+    { sel: '.foot-col:not(.foot-brand) div.foot-h:nth-of-type(2)', en: 'Elsewhere', da: 'Andre steder' },
+    { sel: '.foot-col:not(.foot-brand) ul:nth-of-type(1) a', en: 'Lessons & tabs', da: 'Undervisning & tabs' },
+    { sel: '.foot-rep', mode: 'html',
+      en: 'Represented by Wawe <span class="ext-arrow" aria-hidden="true">↗</span>',
+      da: 'Repræsenteret af Wawe <span class="ext-arrow" aria-hidden="true">↗</span>' },
+    { sel: '.work-card.has-audio .sc-link span', en: 'Listen on SoundCloud', da: 'Hør på SoundCloud' },
+    { sel: '[data-prod="oliver-twist"] .sc-link span', en: 'View at Sjællands Teatret', da: 'Se hos Sjællands Teatret' },
+  ];
+
+  function applyLang(lang) {
+    LANG_STRINGS.forEach(t => {
+      const v = t[lang];
+      if (v == null) return;
+      document.querySelectorAll(t.sel).forEach(el => {
+        if (t.mode === 'html') el.innerHTML = v;
+        else el.textContent = v;
+      });
+    });
+    document.documentElement.lang = lang;
+    document.title = LANG_TITLES[lang];
+    document.querySelectorAll('.lang-toggle button').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === lang));
+  }
+
+  {
+    let stored = null;
+    try { stored = localStorage.getItem(LANG_KEY); } catch (_) {}
+    const initial = (stored === 'da' || stored === 'en') ? stored : 'en';
+    if (initial !== 'en') applyLang(initial);
+  }
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      try { localStorage.setItem(LANG_KEY, btn.dataset.lang); } catch (_) {}
+      applyLang(btn.dataset.lang);
+    });
   });
 </script>
 

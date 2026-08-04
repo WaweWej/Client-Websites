@@ -171,6 +171,31 @@
   }
   .nav .cta:hover { transform: scale(1.04); box-shadow: 0 0 30px rgba(255,255,255,0.3); }
 
+  /* ─── LANGUAGE TOGGLE (in nav) ─── */
+  .nav .lang-sw {
+    display: inline-flex;
+    gap: 2px;
+    margin-left: 6px;
+    padding: 3px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--glass-bd);
+  }
+  .nav .lang-sw button {
+    padding: 4px 9px;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav .lang-sw button:not(.active):hover { background: rgba(255,255,255,0.08); color: var(--ink); }
+  .nav .lang-sw button.active { background: var(--ink); color: var(--bg-deep); }
+
   /* ─── BUTTONS ─── */
   .btn {
     display: inline-flex;
@@ -732,7 +757,7 @@
 <nav class="nav">
   <a href="index.html" class="back">
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Forside
+    <span>Forside</span>
   </a>
   <ul>
     <li><a href="#priser">Priser</a></li>
@@ -740,6 +765,10 @@
     <li><a href="#tabs">Tabs</a></li>
   </ul>
   <a class="cta" href="mailto:Alexander_elung@hotmail.com?subject=Undervisning">Book en time</a>
+  <div class="lang-sw" role="group" aria-label="Sprog / Language">
+    <button type="button" data-lang="da" class="active">DA</button>
+    <button type="button" data-lang="en">EN</button>
+  </div>
 </nav>
 
 <!-- ─── PAGE HERO ─── -->
@@ -751,7 +780,7 @@
   </p>
   <div class="actions">
     <a href="mailto:Alexander_elung@hotmail.com?subject=Undervisning" class="btn btn-primary">
-      Book en time
+      <span>Book en time</span>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
     <a href="#tabs" class="btn btn-ghost">Find tabs</a>
@@ -915,7 +944,7 @@
     </p>
     <div class="actions">
       <a href="mailto:Alexander_elung@hotmail.com?subject=Undervisning" class="btn btn-primary">
-        Book en time
+        <span>Book en time</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="https://www.instagram.com/alexanderelung_music/" target="_blank" rel="noopener" class="btn btn-ghost">Skriv på Instagram</a>
@@ -1032,6 +1061,149 @@
     }
     tick();
   })();
+
+  // ─── LANGUAGE TOGGLE ───
+  // Default: Danish on this page. The visitor's explicit choice is stored and
+  // carried across pages (index.html defaults to English).
+  const LANG_KEY = 'awej.lang';
+  const LANG_TITLES = {
+    da: 'Undervisning & Tabs — Alexander Wrede Elung',
+    en: 'Lessons & Tabs — Alexander Wrede Elung',
+  };
+  const LANG_STRINGS = [
+    // Nav
+    { sel: '.nav .back span', da: 'Forside', en: 'Home' },
+    { sel: '.nav ul a[href="#priser"]', da: 'Priser', en: 'Prices' },
+    { sel: '.nav ul a[href="#laereren"]', da: 'Læreren', en: 'Teacher' },
+    { sel: '.nav .cta', da: 'Book en time', en: 'Book a lesson' },
+    // Hero
+    { sel: '.page-hero h1', mode: 'html',
+      da: 'Undervisning <span class="dim">&amp; tabs</span>',
+      en: 'Lessons <span class="dim">&amp; tabs</span>' },
+    { sel: '.page-hero .lede',
+      da: 'Én-til-én undervisning, tilrettelagt efter dig og dit niveau — online via videoopkald eller på Frederiksberg.',
+      en: 'One-on-one lessons tailored to you and your level — online via video call or in Frederiksberg, Copenhagen.' },
+    { sel: '.page-hero .actions .btn-primary span', da: 'Book en time', en: 'Book a lesson' },
+    // Pricing
+    { sel: '#priser .sec-eyebrow', da: 'Priser', en: 'Prices' },
+    { sel: '#priser .sec-title', mode: 'html',
+      da: 'Enkelt og <span class="dim">gennemskueligt</span>',
+      en: 'Simple and <span class="dim">transparent</span>' },
+    { sel: '#priser .sec-lede',
+      da: 'Undervisningen foregår enten online gennem videoopkald eller på Frederiksberg. Du betaler kun for selve undervisningen — alt det udenom er med i prisen.',
+      en: 'Lessons take place either online via video call or in Frederiksberg. You only pay for the teaching itself — everything around it is included.' },
+    { sel: '#priser .price-card:nth-child(1) .plan', da: 'Undervisningstime', en: 'Lesson' },
+    { sel: '#priser .price-card:nth-child(1) .amount', mode: 'html',
+      da: '400 kr. <span class="unit">/ time</span>',
+      en: '400 kr. <span class="unit">/ hour</span>' },
+    { sel: '#priser .price-card:nth-child(1) .desc',
+      da: 'Prisen inkluderer mere end selve timen — du får alt, hvad du skal bruge for at udvikle dig mellem lektionerne.',
+      en: 'The price covers more than the lesson itself — you get everything you need to keep improving between lessons.' },
+    { sel: '#priser .price-card:nth-child(1) ul.included li:nth-child(1)', mode: 'node',
+      da: 'Løbende sparring — skriv med spørgsmål mellem lektionerne',
+      en: 'Ongoing support — message me with questions between lessons' },
+    { sel: '#priser .price-card:nth-child(1) ul.included li:nth-child(2)', mode: 'node',
+      da: 'Tabs/noder til det, vi arbejder med',
+      en: 'Tabs/sheet music for what we’re working on' },
+    { sel: '#priser .price-card:nth-child(1) ul.included li:nth-child(3)', mode: 'node',
+      da: 'En personligt tilrettelagt øveplan',
+      en: 'A personally tailored practice plan' },
+    { sel: '#priser .price-card:nth-child(1) .card-cta .btn', da: 'Book en time', en: 'Book a lesson' },
+    { sel: '#priser .price-card:nth-child(2) .plan', mode: 'html',
+      da: 'Klippekort · 10 timer <span class="save-badge">20 % rabat</span>',
+      en: 'Lesson pass · 10 hours <span class="save-badge">20% off</span>' },
+    { sel: '#priser .price-card:nth-child(2) .desc',
+      da: 'Ønsker du et længere forløb, får du 10 undervisningstimer med 20 % rabat — du sparer 800 kr.',
+      en: 'If you want a longer course, you get 10 lessons at 20% off — saving you 800 kr.' },
+    { sel: '#priser .price-card:nth-child(2) ul.included li:nth-child(1)', mode: 'node',
+      da: 'Alt fra den almindelige undervisningstime er med',
+      en: 'Everything from a single lesson is included' },
+    { sel: '#priser .price-card:nth-child(2) ul.included li:nth-child(2)', mode: 'node',
+      da: 'Timerne bruges i dit eget tempo',
+      en: 'Use the hours at your own pace' },
+    { sel: '#priser .price-card:nth-child(2) .card-cta .btn', da: 'Hør mere om klippekort', en: 'Ask about the lesson pass' },
+    // Info cards
+    { sel: '.info-grid .info-card:nth-child(1) h3', da: 'Online eller på Frederiksberg', en: 'Online or in Frederiksberg' },
+    { sel: '.info-grid .info-card:nth-child(1) p',
+      da: 'Undervisningen foregår enten online gennem videoopkald eller fysisk på Frederiksberg — som det passer dig bedst.',
+      en: 'Lessons take place online via video call or in person in Frederiksberg — whatever suits you best.' },
+    { sel: '.info-grid .info-card:nth-child(2) h3', da: 'Én time om måneden er tit nok', en: 'One hour a month is often enough' },
+    { sel: '.info-grid .info-card:nth-child(2) p',
+      da: 'For mange er en time om måneden rigeligt, da der er meget at øve på mellem lektionerne.',
+      en: 'For many, one lesson a month is plenty, as there is a lot to practise between lessons.' },
+    { sel: '.info-grid .info-card:nth-child(3) h3', da: 'Del timen op i 2 × 30 min.', en: 'Split the hour into 2 × 30 min.' },
+    { sel: '.info-grid .info-card:nth-child(3) p',
+      da: 'Nogle vælger at dele timen op i to lektioner á 30 minutter — det passer bedre ind i hverdagen og giver en mere jævn udvikling.',
+      en: 'Some choose to split the hour into two 30-minute lessons — it fits everyday life better and gives a steadier progression.' },
+    // Teacher
+    { sel: '#laereren .sec-eyebrow', da: 'Mød læreren', en: 'Meet the teacher' },
+    { sel: '.teacher-text p:nth-of-type(1)',
+      da: 'Jeg er komponist og musikproducer fra København. Til daglig skriver jeg musik til teaterforestillinger — bl.a. for Folketeatret, Odense Teater og Teater Zeppelin — og deler covers og egne numre på TikTok, YouTube og Instagram.',
+      en: 'I’m a composer and music producer from Copenhagen. I write music for theatre productions — including Folketeatret, Odense Teater and Teater Zeppelin — and share covers and my own songs on TikTok, YouTube and Instagram.' },
+    { sel: '.teacher-text p:nth-of-type(2)',
+      da: 'Som lærer tager jeg udgangspunkt i dig: din smag, dit niveau og det, du drømmer om at kunne spille. Undervisningen er afslappet og konkret — vi arbejder med de numre, du gerne vil lære, og du får tabs, noder og en øveplan med hjem, så du altid ved, hvad du skal øve på.',
+      en: 'As a teacher I start with you: your taste, your level and what you dream of playing. Lessons are relaxed and hands-on — we work on the songs you want to learn, and you get tabs, sheet music and a practice plan to take home, so you always know what to practise.' },
+    { sel: '.teacher-text p:nth-of-type(3)',
+      da: 'Uanset om du er helt ny eller har spillet i årevis, finder vi et niveau, der passer til dig.',
+      en: 'Whether you’re brand new or have played for years, we’ll find a level that fits you.' },
+    { sel: '.teacher-chips span:nth-child(1)', da: 'Komponist & producer', en: 'Composer & producer' },
+    { sel: '.teacher-chips span:nth-child(2)', da: 'Alle niveauer', en: 'All levels' },
+    { sel: '.teacher-chips span:nth-child(3)', da: 'Online eller på Frederiksberg', en: 'Online or in Frederiksberg' },
+    { sel: '#laereren .btn-row .btn', da: 'Book en time', en: 'Book a lesson' },
+    // Tabs
+    { sel: '#tabs .sec-title', mode: 'html',
+      da: 'Tabs <span class="dim">&amp; noder</span>',
+      en: 'Tabs <span class="dim">&amp; sheet music</span>' },
+    { sel: '#tabs .sec-lede',
+      da: 'Her samler jeg tabs til mine numre og covers. Listen bliver opdateret løbende, så kig forbi igen — eller skriv, hvis du mangler en bestemt.',
+      en: 'Here I collect tabs for my songs and covers. The list is updated regularly, so check back — or write me if you’re missing one.' },
+    { sel: '.tabs-empty p',
+      da: 'De første tabs er på vej og bliver lagt op her løbende. Mangler du en bestemt tab allerede nu? Skriv til mig, så sender jeg den til dig.',
+      en: 'The first tabs are on their way and will be added here. Missing a specific tab already? Write me and I’ll send it to you.' },
+    { sel: '.tabs-empty .btn-primary', da: 'Skriv på Instagram', en: 'Message me on Instagram' },
+    { sel: '.tabs-empty .btn-ghost', da: 'Send en mail', en: 'Send an email' },
+    // Contact
+    { sel: '#kontakt .contact h2', mode: 'html',
+      da: 'Klar til at <span class="dim">komme i gang?</span>',
+      en: 'Ready to <span class="dim">get started?</span>' },
+    { sel: '#kontakt .contact p',
+      da: 'Skriv en besked med lidt om dig selv og dit niveau, så finder vi en tid, der passer — online eller på Frederiksberg.',
+      en: 'Send me a message about yourself and your level, and we’ll find a time that works — online or in Frederiksberg.' },
+    { sel: '#kontakt .actions .btn-primary span', da: 'Book en time', en: 'Book a lesson' },
+    { sel: '#kontakt .actions .btn-ghost', da: 'Skriv på Instagram', en: 'Message me on Instagram' },
+    // Footer
+    { sel: '.foot-bottom span', da: '© MMXXVI · Alexander Wrede Elung · København', en: '© MMXXVI · Alexander Wrede Elung · Copenhagen' },
+    { sel: '.foot-bottom a', da: '← Tilbage til forsiden', en: '← Back to the front page' },
+  ];
+
+  function applyLang(lang) {
+    LANG_STRINGS.forEach(t => {
+      const v = t[lang];
+      if (v == null) return;
+      document.querySelectorAll(t.sel).forEach(el => {
+        if (t.mode === 'html') el.innerHTML = v;
+        else if (t.mode === 'node') { if (el.lastChild) el.lastChild.nodeValue = ' ' + v + '\n'; }
+        else el.textContent = v;
+      });
+    });
+    document.documentElement.lang = lang;
+    document.title = LANG_TITLES[lang];
+    document.querySelectorAll('.lang-sw button').forEach(b =>
+      b.classList.toggle('active', b.dataset.lang === lang));
+  }
+
+  {
+    let stored = null;
+    try { stored = localStorage.getItem(LANG_KEY); } catch (_) {}
+    const initial = (stored === 'da' || stored === 'en') ? stored : 'da';
+    if (initial !== 'da') applyLang(initial);
+  }
+  document.querySelectorAll('.lang-sw button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      try { localStorage.setItem(LANG_KEY, btn.dataset.lang); } catch (_) {}
+      applyLang(btn.dataset.lang);
+    });
+  });
 </script>
 
 </body>
