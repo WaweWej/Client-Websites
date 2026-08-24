@@ -30,6 +30,7 @@
     --img-king-lear:    url('images/king-lear.jpg');
     --img-stormfulde:   url('images/stormfulde.jpg');
     --img-drengen:      url('images/drengen.jpg');
+    --img-dfa:          url('images/du-foedes-alene.jpg');
     --img-portrait:     url('images/portrait-casual.jpg');
   }
   /* ─── SYSTEM ─── */
@@ -1268,6 +1269,29 @@
   <h2 class="sec-title">Featured <span class="it grad">work</span></h2>
 
   <div class="work-grid">
+    <!-- Du Fødes Alene - newest production -->
+    <article class="work-card v-red" data-prod="du-foedes-alene" data-image style="--card-image: var(--img-dfa)">
+      <div class="top">
+        <div class="track">
+          <span class="track-dots"></span>
+          <span class="track-title"></span>
+        </div>
+        <div class="controls">
+          <button class="next" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M5 5v14l9-7zM16 5h2v14h-2z"/></svg></button>
+          <button class="play" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+        </div>
+      </div>
+      <svg class="wave-deco" viewBox="0 0 400 80" preserveAspectRatio="none">
+        <path d="M 0 40 Q 20 20 40 40 T 80 40 T 120 40 T 160 40 T 200 40 T 240 40 T 280 40 T 320 40 T 360 40 T 400 40"
+              stroke="rgba(255,255,255,0.45)" stroke-width="1.5" fill="none" opacity="0.7"/>
+      </svg>
+      <div class="meta">
+        <div class="venue"><span class="tag">Krudttønden</span><span>24–27 September</span></div>
+        <div class="name">Du Fødes Alene</div>
+      </div>
+      <div class="progress"><div class="bar"></div></div>
+    </article>
+
     <!-- Oliver Twist - feature card -->
     <article class="work-card v-pink" data-prod="oliver-twist" data-image style="--card-image: var(--img-oliver-twist)">
       <div class="top">
@@ -1366,8 +1390,8 @@
       <div class="progress"><div class="bar"></div></div>
     </article>
 
-    <!-- Drengen Der fik En Hunds Hjerte - wide card -->
-    <article class="work-card wide v-jade" data-prod="drengen" data-image style="--card-image: var(--img-drengen)">
+    <!-- Drengen Der Fik En Hunds Hjerte -->
+    <article class="work-card v-jade" data-prod="drengen" data-image style="--card-image: var(--img-drengen)">
       <div class="top">
         <div class="track">
           <span class="track-dots"></span>
@@ -1570,6 +1594,13 @@
   // set URL. Productions with audio:null have no playback UI shown.
   // -----------------------------------------------------------------------------
   const productions = {
+    'du-foedes-alene': {
+      name: 'Du Fødes Alene',
+      venue: 'Krudttønden · 2026',
+      audio: null,  // Premieres September 2026 — no recording yet
+      link: 'https://krudttonden.kk.dk/program/du-foedes-alene',
+      linkLabel: 'Buy tickets',
+    },
     'oliver-twist': {
       name: 'Oliver Twist',
       venue: 'Sjællands Teatret · 2026',
@@ -1904,6 +1935,8 @@
       en: 'Featured <span class="it grad">work</span>',
       da: 'Udvalgte <span class="it grad">værker</span>' },
     { sel: '[data-prod="human-gaze"] .venue .tag', en: 'Stage', da: 'Scene' },
+    { sel: '[data-prod="du-foedes-alene"] .venue span:nth-child(2)', en: '24–27 September', da: '24.–27. september' },
+    { sel: '[data-prod="du-foedes-alene"] .sc-link span', en: 'Buy tickets', da: 'Køb billetter' },
     { sel: '.contact-h1 .c-label', en: 'Contact', da: 'Kontakt' },
     { sel: '.foot-tag', en: 'Composer & Sound Designer', da: 'Komponist & sounddesigner' },
     { sel: '.foot-bio',
