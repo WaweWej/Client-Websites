@@ -1269,29 +1269,6 @@
   <h2 class="sec-title">Featured <span class="it grad">work</span></h2>
 
   <div class="work-grid">
-    <!-- Du Fødes Alene - newest production -->
-    <article class="work-card v-red" data-prod="du-foedes-alene" data-image style="--card-image: var(--img-dfa)">
-      <div class="top">
-        <div class="track">
-          <span class="track-dots"></span>
-          <span class="track-title"></span>
-        </div>
-        <div class="controls">
-          <button class="next" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M5 5v14l9-7zM16 5h2v14h-2z"/></svg></button>
-          <button class="play" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
-        </div>
-      </div>
-      <svg class="wave-deco" viewBox="0 0 400 80" preserveAspectRatio="none">
-        <path d="M 0 40 Q 20 20 40 40 T 80 40 T 120 40 T 160 40 T 200 40 T 240 40 T 280 40 T 320 40 T 360 40 T 400 40"
-              stroke="rgba(255,255,255,0.45)" stroke-width="1.5" fill="none" opacity="0.7"/>
-      </svg>
-      <div class="meta">
-        <div class="venue"><span class="tag">Krudttønden</span><span>24–27 September</span></div>
-        <div class="name">Du Fødes Alene</div>
-      </div>
-      <div class="progress"><div class="bar"></div></div>
-    </article>
-
     <!-- Oliver Twist - feature card -->
     <article class="work-card v-pink" data-prod="oliver-twist" data-image style="--card-image: var(--img-oliver-twist)">
       <div class="top">
@@ -1311,8 +1288,31 @@
               stroke="rgba(255,255,255,0.45)" stroke-width="1" fill="none" opacity="0.4"/>
       </svg>
       <div class="meta">
-        <div class="venue"><span class="tag">Sjællands Teatret</span><span>Premiere · 2026</span></div>
+        <div class="venue"><span class="tag">Sjællands Teatret</span><span>Premiere · 2027</span></div>
         <div class="name">Oliver Twist</div>
+      </div>
+      <div class="progress"><div class="bar"></div></div>
+    </article>
+
+    <!-- Du Fødes Alene - newest production -->
+    <article class="work-card v-red" data-prod="du-foedes-alene" data-image style="--card-image: var(--img-dfa)">
+      <div class="top">
+        <div class="track">
+          <span class="track-dots"></span>
+          <span class="track-title"></span>
+        </div>
+        <div class="controls">
+          <button class="next" aria-label="Next track"><svg viewBox="0 0 24 24"><path d="M5 5v14l9-7zM16 5h2v14h-2z"/></svg></button>
+          <button class="play" aria-label="Play"><svg class="icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><svg class="icon-pause" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+        </div>
+      </div>
+      <svg class="wave-deco" viewBox="0 0 400 80" preserveAspectRatio="none">
+        <path d="M 0 40 Q 20 20 40 40 T 80 40 T 120 40 T 160 40 T 200 40 T 240 40 T 280 40 T 320 40 T 360 40 T 400 40"
+              stroke="rgba(255,255,255,0.45)" stroke-width="1.5" fill="none" opacity="0.7"/>
+      </svg>
+      <div class="meta">
+        <div class="venue"><span class="tag">Krudttønden</span><span>24–27 September</span></div>
+        <div class="name">Du Fødes Alene</div>
       </div>
       <div class="progress"><div class="bar"></div></div>
     </article>
@@ -1597,14 +1597,14 @@
     'du-foedes-alene': {
       name: 'Du Fødes Alene',
       venue: 'Krudttønden · 2026',
-      audio: null,  // Premieres September 2026 — no recording yet
+      audio: { url: 'https://soundcloud.com/alexander-wrede-elung/ballet-of-the-turtles?si=a884c7d115d049e6a68941b1d37b7cd5&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing' },
       link: 'https://krudttonden.kk.dk/program/du-foedes-alene',
       linkLabel: 'Buy tickets',
     },
     'oliver-twist': {
       name: 'Oliver Twist',
-      venue: 'Sjællands Teatret · 2026',
-      audio: null,  // Premieres 2026 — no recording yet
+      venue: 'Sjællands Teatret · 2027',
+      audio: null,  // Premieres 2027 — no recording yet
       link: 'https://sjaellandsteater.dk/program/oliver-twist-holbaek/',
       linkLabel: 'View at Sjællands Teatret',
     },
